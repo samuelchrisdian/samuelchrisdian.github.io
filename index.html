@@ -1,193 +1,846 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Switch Template</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|IBM+Plex+Sans:600" rel="stylesheet">
-    <link rel="stylesheet" href="dist/css/style.css">
-    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samuel Chrisdian | Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --bg-light: #ffffff;
+            --bg-section: #f7fafc;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --text-dark: #f7fafc;
+            --text-light: #e2e8f0;
+            --text-muted: #a0aec0;
+            --bg-light: #1a202c;
+            --bg-section: #2d3748;
+            --border-color: #4a5568;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .header {
+            background: rgba(26, 32, 44, 0.95);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-section);
+            transform: rotate(180deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .skill-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 2rem 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-header {
+            padding: 2rem 2rem 0;
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 2rem 2rem;
+        }
+
+        .tag {
+            background: var(--bg-section);
+            color: var(--text-light);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--bg-section);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .loading.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-<body class="is-boxed has-animations">
-    <div class="body-wrap boxed-container">
-        <header class="site-header">
-            <div class="container">
-                <div class="site-header-inner">
-                    <div class="brand header-brand">
-                        <h1 class="m-0">
-                            <a href="#">
-								<img class="header-logo-image asset-light" src="dist/images/logo-light.svg" alt="Logo">
-								<img class="header-logo-image asset-dark" src="dist/images/logo-dark.svg" alt="Logo">
-                            </a>
-                        </h1>
-                    </div>
-                </div>
+<body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+        <nav class="container">
+            <div class="nav">
+                <a href="#" class="logo">Samuel Chrisdian</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+                </ul>
             </div>
-        </header>
+        </nav>
+    </header>
 
-        <main>
-            <section class="hero">
-                <div class="container">
-                    <div class="hero-inner">
-						<div class="hero-copy">
-	                        <h1 class="hero-title mt-0">Landing template for startups</h1>
-	                        <p class="hero-paragraph">Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
-	                        <div class="hero-cta">
-								<a class="button button-primary" href="#">Buy it now</a>
-								<div class="lights-toggle">
-									<input id="lights-toggle" type="checkbox" name="lights-toggle" class="switch" checked="checked">
-									<label for="lights-toggle" class="text-xs"><span>Turn me <span class="label-text">dark</span></span></label>
-								</div>
-							</div>
-						</div>
-						<div class="hero-media">
-							<div class="header-illustration">
-								<img class="header-illustration-image asset-light" src="dist/images/header-illustration-light.svg" alt="Header illustration">
-								<img class="header-illustration-image asset-dark" src="dist/images/header-illustration-dark.svg" alt="Header illustration">
-							</div>
-							<div class="hero-media-illustration">
-								<img class="hero-media-illustration-image asset-light" src="dist/images/hero-media-illustration-light.svg" alt="Hero media illustration">
-								<img class="hero-media-illustration-image asset-dark" src="dist/images/hero-media-illustration-dark.svg" alt="Hero media illustration">
-							</div>
-							<div class="hero-media-container">
-								<img class="hero-media-image asset-light" src="dist/images/hero-media-light.svg" alt="Hero media">
-								<img class="hero-media-image asset-dark" src="dist/images/hero-media-dark.svg" alt="Hero media">
-							</div>
-						</div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="features section">
-                <div class="container">
-					<div class="features-inner section-inner has-bottom-divider">
-						<div class="features-header text-center">
-							<div class="container-sm">
-								<h2 class="section-title mt-0">The Product</h2>
-	                            <p class="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
-								<div class="features-image">
-									<img class="features-illustration asset-dark" src="dist/images/features-illustration-dark.svg" alt="Feature illustration">
-									<img class="features-box asset-dark" src="dist/images/features-box-dark.svg" alt="Feature box">
-									<img class="features-illustration asset-dark" src="dist/images/features-illustration-top-dark.svg" alt="Feature illustration top">
-									<img class="features-illustration asset-light" src="dist/images/features-illustration-light.svg" alt="Feature illustration">
-									<img class="features-box asset-light" src="dist/images/features-box-light.svg" alt="Feature box">
-									<img class="features-illustration asset-light" src="dist/images/features-illustration-top-light.svg" alt="Feature illustration top">
-								</div>
-							</div>
-                        </div>
-                        <div class="features-wrap">
-                            <div class="feature is-revealing">
-                                <div class="feature-inner">
-                                    <div class="feature-icon">
-										<img class="asset-light" src="dist/images/feature-01-light.svg" alt="Feature 01">
-										<img class="asset-dark" src="dist/images/feature-01-dark.svg" alt="Feature 01">
-                                    </div>
-									<div class="feature-content">
-                                    	<h3 class="feature-title mt-0">Discover</h3>
-                                    	<p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
-									</div>
-								</div>
-                            </div>
-							<div class="feature is-revealing">
-                                <div class="feature-inner">
-                                    <div class="feature-icon">
-										<img class="asset-light" src="dist/images/feature-02-light.svg" alt="Feature 02">
-										<img class="asset-dark" src="dist/images/feature-02-dark.svg" alt="Feature 02">
-                                    </div>
-									<div class="feature-content">
-                                    	<h3 class="feature-title mt-0">Discover</h3>
-                                    	<p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
-									</div>
-								</div>
-                            </div>
-							<div class="feature is-revealing">
-                                <div class="feature-inner">
-                                    <div class="feature-icon">
-										<img class="asset-light" src="dist/images/feature-03-light.svg" alt="Feature 03">
-										<img class="asset-dark" src="dist/images/feature-03-dark.svg" alt="Feature 03">
-                                    </div>
-									<div class="feature-content">
-                                    	<h3 class="feature-title mt-0">Discover</h3>
-                                    	<p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
-									</div>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-			<section class="cta section">
-                <div class="container-sm">
-                    <div class="cta-inner section-inner">
-                        <div class="cta-header text-center">
-                            <h2 class="section-title mt-0">Get it and Switch</h2>
-                            <p class="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
-							<div class="cta-cta">
-								<a class="button button-primary" href="#">Buy it now</a>
-							</div>
-					    </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="site-footer has-top-divider">
-            <div class="container">
-                <div class="site-footer-inner">
-                    <div class="brand footer-brand">
-                        <a href="#">
-							<img class="asset-light" src="dist/images/logo-light.svg" alt="Logo">
-							<img class="asset-dark" src="dist/images/logo-dark.svg" alt="Logo">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text loading">
+                    <h1>Hi, I'm Samuel Chrisdian</h1>
+                    <p class="subtitle">Full Stack Developer</p>
+                    <p>I am a Full Stack Developer with over two years of experience, proficient in PHP, Javascript, SQL, and Oracle. I specialize in building robust, scalable, and user-friendly web applications, from comprehensive enterprise systems to dynamic company websites.</p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">
+                            <i class="fas fa-eye"></i>
+                            View My Work
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-envelope"></i>
+                            Get In Touch
                         </a>
                     </div>
-                    <ul class="footer-links list-reset">
-                        <li>
-                            <a href="#">Contact</a>
-                        </li>
-                        <li>
-                            <a href="#">About us</a>
-                        </li>
-                        <li>
-                            <a href="#">FAQ's</a>
-                        </li>
-                        <li>
-                            <a href="#">Support</a>
-                        </li>
-                    </ul>
-                    <ul class="footer-social-links list-reset">
-                        <li>
-                            <a href="#">
-                                <span class="screen-reader-text">Facebook</span>
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z" fill="#FFF"/>
-                                </svg>
+                </div>
+                <div class="hero-image loading">
+                    <div class="profile-card">
+                        <img src="picture.jpg" alt="Samuel Chrisdian" class="profile-img">
+                        <div class="social-links">
+                            <a href="https://linkedin.com/in/samuelchrisdian" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="screen-reader-text">Twitter</span>
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z" fill="#FFF"/>
-                                </svg>
+                            <a href="https://github.com/samuelchrisdian" target="_blank">
+                                <i class="fab fa-github"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="screen-reader-text">Google</span>
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.9 7v2.4H12c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C11.5 1.7 9.9 1 8 1 4.1 1 1 4.1 1 8s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H7.9z" fill="#FFF"/>
-                                </svg>
+                            <a href="mailto:samuelchrisdian2003@gmail.com">
+                                <i class="fas fa-envelope"></i>
                             </a>
-                        </li>
-                    </ul>
-                    <div class="footer-copyright">&copy; 2018 Switch, all rights reserved</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
 
-    <script src="dist/js/main.min.js"></script>
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title loading">Technical Skills</h2>
+            <p class="section-subtitle loading">Technologies and tools I work with</p>
+            <div class="skills-grid">
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-php"></i></div>
+                    <div class="skill-name">PHP</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-js-square"></i></div>
+                    <div class="skill-name">JavaScript</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <div class="skill-name">SQL</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fas fa-server"></i></div>
+                    <div class="skill-name">Oracle</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-laravel"></i></div>
+                    <div class="skill-name">Laravel</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-react"></i></div>
+                    <div class="skill-name">React JS</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-wordpress"></i></div>
+                    <div class="skill-name">WordPress</div>
+                </div>
+                <div class="skill-card loading">
+                    <div class="skill-icon"><i class="fab fa-linux"></i></div>
+                    <div class="skill-name">Linux</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section" style="background: var(--bg-section);">
+        <div class="container">
+            <h2 class="section-title loading">Featured Projects</h2>
+            <p class="section-subtitle loading">Showcasing my expertise in developing comprehensive systems and web applications</p>
+            <div class="projects-grid">
+                <div class="project-card loading">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="project-title">Management Information System (MIS)</h3>
+                        <p class="project-description">
+                            Developed a comprehensive MIS for PT Sigma Cipta Caraka (Telkomsigma) to automate the company's full accounting processes. The system was built using PHP, JQuery, and Oracle, running on Linux-based servers.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">jQuery</span>
+                        <span class="tag">Oracle</span>
+                        <span class="tag">Linux</span>
+                    </div>
+                </div>
+
+                <div class="project-card loading">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="project-title">Enterprise Resource Planning (ERP) System</h3>
+                        <p class="project-description">
+                            At Genesys Integrated Indonesia, developed a full-stack ERP system to integrate finance, operations, and supply chain processes. Created a BPOM-compliant barcode generator and led client implementation and training.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Full Stack</span>
+                        <span class="tag">ERP</span>
+                        <span class="tag">Barcode</span>
+                        <span class="tag">BPOM</span>
+                    </div>
+                </div>
+
+                <div class="project-card loading">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="project-title">Freelance Company Websites</h3>
+                        <p class="project-description">
+                            Built and launched responsive websites for various clients including PT Delta Edukasi Semesta and CV Cepat Tanggap Logistik, using technologies such as PHP, Laravel, React JS, and WordPress.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">React JS</span>
+                        <span class="tag">WordPress</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title loading">Let's Work Together</h2>
+                <p class="section-subtitle loading">
+                    I am actively seeking new opportunities and challenges. If you have a project in mind or would like to connect, please don't hesitate to reach out.
+                </p>
+                <div class="hero-buttons loading">
+                    <a href="mailto:samuelchrisdian2003@gmail.com" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        Email Me
+                    </a>
+                    <a href="https://linkedin.com/in/samuelchrisdian" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-linkedin-in"></i>
+                        LinkedIn
+                    </a>
+                    <a href="https://api.whatsapp.com/send/?phone=628123454665&text&type=phone_number&app_absent=0" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="https://instagram.com/samuelchrisdian" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-instagram"></i>
+                        Instagram
+                    </a>
+                    <a href="https://github.com/samuelchrisdian" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i>
+                        Github
+                    </a>
+                </div>
+                <div class="contact-info loading">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>samuelchrisdian2003@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>linkedin.com/in/samuelchrisdian</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/samuelchrisdian</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>&copy; 2025 Samuel Chrisdian. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="mailto:samuelchrisdian2003@gmail.com">Email</a>
+                    <a href="https://linkedin.com/in/samuelchrisdian" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/samuelchrisdian" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            const icon = themeToggle.querySelector('i');
+            icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            const icon = themeToggle.querySelector('i');
+            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all loading elements
+        document.querySelectorAll('.loading').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.header');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Add loading animation on page load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.loading').forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('loaded');
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
