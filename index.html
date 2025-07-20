@@ -284,16 +284,16 @@
             transform: translateY(-2px);
         }
 
-        /* About Section */
+        /* Section Styles */
         .section {
-            padding: 5rem 0;
+            padding: 6rem 0;
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             color: var(--text-dark);
         }
 
@@ -312,7 +312,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 2rem;
-            margin-bottom: 4rem;
         }
 
         .skill-card {
@@ -340,6 +339,157 @@
             color: var(--text-dark);
         }
 
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-light);
+            border: 4px solid var(--primary-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background-color: var(--bg-light);
+            position: relative;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .timeline-subtitle {
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-text {
+            color: var(--text-light);
+        }
+        
+        .timeline-text ul {
+            padding-left: 1.2rem;
+        }
+        
+        .timeline-text li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Education Grid */
+        .education-grid {
+             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .education-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .education-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .education-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        
+        .education-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .education-details {
+            color: var(--text-light);
+        }
+
+        .education-details p {
+            margin-bottom: 0.5rem;
+        }
+        
         /* Projects */
         .projects-grid {
             display: grid;
@@ -472,7 +622,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                display: none; /* Will be handled by a mobile menu in a future update if needed */
             }
 
             .hero-content {
@@ -490,8 +640,26 @@
             }
 
             .projects-grid,
-            .skills-grid {
+            .skills-grid,
+            .education-grid {
                 grid-template-columns: 1fr;
+            }
+
+             /* Timeline Responsive */
+            .timeline::after {
+                left: 20px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 60px;
+                padding-right: 10px;
+            }
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            .timeline-item::after {
+                left: 10px;
             }
 
             .contact-info {
@@ -546,9 +714,10 @@
             <div class="nav">
                 <a href="#" class="logo">Samuel Chrisdian</a>
                 <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#education">Education</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
                 </ul>
@@ -577,7 +746,7 @@
                 </div>
                 <div class="hero-image loading">
                     <div class="profile-card">
-                        <img src="picture.JPG" alt="Samuel Chrisdian" class="profile-img">
+                        <img src="picture.JPG" alt="Samuel Chrisdian" class="profile-img" onerror="this.onerror=null;this.src='https://placehold.co/200x200/667eea/ffffff?text=SC';">
                         <div class="social-links">
                             <a href="https://linkedin.com/in/samuelchrisdian" target="_blank">
                                 <i class="fab fa-linkedin-in"></i>
@@ -601,7 +770,8 @@
             <h2 class="section-title loading">Technical Skills</h2>
             <p class="section-subtitle loading">Technologies and tools I work with</p>
             <div class="skills-grid">
-                <div class="skill-card loading">
+                <!-- Skill cards remain the same -->
+                 <div class="skill-card loading">
                     <div class="skill-icon"><i class="fab fa-php"></i></div>
                     <div class="skill-name">PHP</div>
                 </div>
@@ -637,13 +807,67 @@
         </div>
     </section>
 
+    <!-- Work Experience Section -->
+    <section id="experience" class="section" style="background: var(--bg-section);">
+        <div class="container">
+            <h2 class="section-title loading">Work Experience</h2>
+            <p class="section-subtitle loading">My professional journey</p>
+            <div class="timeline">
+                <div class="timeline-item loading">
+                    <div class="timeline-content">
+                        <div class="timeline-date">August 2022 - Present</div>
+                        <h3 class="timeline-title">Fullstack Web Developer</h3>
+                        <div class="timeline-subtitle">PT Sigma Cipta Caraka (Telkomsigma)</div>
+                        <div class="timeline-text">
+                            <ul>
+                                <li>Developed a comprehensive Management Information System (MIS) to automate company's accounting processes.</li>
+                                <li>Utilized PHP, JQuery, Oracle, and JavaScript for robust web application development.</li>
+                                <li>Coordinated projects using Git (Gitlab) and OAT for version control and system management.</li>
+                                <li>Implemented reusable code with OOP principles and maintained Linux-based servers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item loading">
+                    <div class="timeline-content">
+                        <div class="timeline-date">May 2021 - July 2022</div>
+                        <h3 class="timeline-title">Web Developer</h3>
+                        <div class="timeline-subtitle">Genesys Integrated Indonesia</div>
+                        <div class="timeline-text">
+                           <ul>
+                                <li>Developed a full-stack Enterprise Resource Planning (ERP) system.</li>
+                                <li>Created a BPOM-compliant barcode generator application.</li>
+                                <li>Integrated ADAM PIC controllers using WebSockets and Modbus for production management.</li>
+                                <li>Led client implementation, training, and support processes.</li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item loading">
+                    <div class="timeline-content">
+                        <div class="timeline-date">May 2021 - Present</div>
+                        <h3 class="timeline-title">Freelance Fullstack Web Developer</h3>
+                        <div class="timeline-subtitle">Various Clients</div>
+                        <div class="timeline-text">
+                            <ul>
+                                <li>Built and launched responsive websites for clients like PT Delta Edukasi Semesta and CV Cepat Tanggap Logistik.</li>
+                                <li>Developed robust web applications using a wide range of technologies including PHP, Laravel, React JS, and WordPress.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
-    <section id="projects" class="section" style="background: var(--bg-section);">
+    <section id="projects" class="section">
         <div class="container">
             <h2 class="section-title loading">Featured Projects</h2>
             <p class="section-subtitle loading">Showcasing my expertise in developing comprehensive systems and web applications</p>
             <div class="projects-grid">
-                <div class="project-card loading">
+                <!-- Project cards remain the same -->
+                 <div class="project-card loading">
                     <div class="project-header">
                         <div class="project-icon">
                             <i class="fas fa-chart-line"></i>
@@ -699,6 +923,42 @@
             </div>
         </div>
     </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="section" style="background: var(--bg-section);">
+        <div class="container">
+            <h2 class="section-title loading">Education</h2>
+            <p class="section-subtitle loading">My academic background</p>
+            <div class="education-grid">
+                <div class="education-card loading">
+                    <div class="education-header">
+                        <div class="education-icon"><i class="fas fa-university"></i></div>
+                        <div>
+                            <h3 class="education-title">Bina Nusantara University</h3>
+                            <div class="education-subtitle">Bachelor of Information Systems</div>
+                        </div>
+                    </div>
+                    <div class="education-details">
+                        <p><strong>Period:</strong> 2022 - 2026 (Expected)</p>
+                        <p><strong>GPA:</strong> 3.99 / 4.00 (Current)</p>
+                    </div>
+                </div>
+                <div class="education-card loading">
+                    <div class="education-header">
+                        <div class="education-icon"><i class="fas fa-school"></i></div>
+                        <div>
+                            <h3 class="education-title">SMK Telkom Malang</h3>
+                            <div class="education-subtitle">Software Engineering (RPL)</div>
+                        </div>
+                    </div>
+                    <div class="education-details">
+                        <p><strong>Period:</strong> 2018 - 2021</p>
+                        <p><strong>Achievements:</strong> Best Graduate (Score: 94) & "Sangat Baik" UKK Certification.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section contact">
@@ -709,6 +969,7 @@
                     I am actively seeking new opportunities and challenges. If you have a project in mind or would like to connect, please don't hesitate to reach out.
                 </p>
                 <div class="hero-buttons loading">
+                    <!-- Contact buttons remain the same -->
                     <a href="mailto:samuelchrisdian2003@gmail.com" class="btn btn-primary">
                         <i class="fas fa-envelope"></i>
                         Email Me
@@ -721,17 +982,9 @@
                         <i class="fab fa-whatsapp"></i>
                         WhatsApp
                     </a>
-                    <a href="https://instagram.com/samuelchrisdian" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-instagram"></i>
-                        Instagram
-                    </a>
-                    <a href="https://github.com/samuelchrisdian" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-github"></i>
-                        Github
-                    </a>
                 </div>
                 <div class="contact-info loading">
-                    <div class="contact-item">
+                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <span>samuelchrisdian2003@gmail.com</span>
                     </div>
@@ -793,9 +1046,14 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    // Adjust for fixed header height
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                         top: offsetPosition,
+                         behavior: "smooth"
                     });
                 }
             });
@@ -807,10 +1065,11 @@
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('loaded');
+                    observer.unobserve(entry.target); // Stop observing after animation
                 }
             });
         }, observerOptions);
@@ -825,6 +1084,12 @@
         const header = document.querySelector('.header');
 
         window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                 header.style.boxShadow = 'none';
+            }
+            
             if (window.scrollY > lastScrollY && window.scrollY > 100) {
                 header.style.transform = 'translateY(-100%)';
             } else {
@@ -833,14 +1098,6 @@
             lastScrollY = window.scrollY;
         });
 
-        // Add loading animation on page load
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.loading').forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('loaded');
-                }, index * 100);
-            });
-        });
     </script>
 </body>
 </html>
